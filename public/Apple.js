@@ -5,24 +5,22 @@ var Pizza = function(game)
         this.Size = size || 1;
         this.Position = position;
         this.TimeSpan = time || 20000;
-        this.Image = "images/apple" + Size + ".png";
-    }
+    };
     
     this.Draw = function(graphics)
     {
-        var img = game.Resources["appleimage" + size];
-        graphics.drawImage(game.Resources["appleimage" + size], x - img.width/2  , y - img.height/2);
-    }
+        var img = game.Resources["imgPizza"];
+        graphics.drawImage(img, this.Position.X - img.width/2  , this.Position.Y - img.height/2);
+    };
     
     this.Update = function(ts)
     {
         
-    }
-    
+    };
     
     this.Eaten = function (snake)
     {
-        snake.Increase(sizes);
-    }
+        snake.Increase(this.Size);
+    };
     
-}
+};
