@@ -34,7 +34,7 @@ SnakeNinja.Snake = function(game)
 
         if (this.Alive)
         {
-            if (this.remote)
+            if (!this.remote)
             {
                 // Add new point.
                 var newPoint = new SnakeNinja.Structures.TimedPoint(this.Length, this.Points[this.Points.length - 1]);
@@ -70,7 +70,7 @@ SnakeNinja.Snake = function(game)
     
     this.Draw = function(graphics)
     {
-        if (this.Alive > 0)
+        if (this.Alive)
         {
             for (var i = 0; i < this.Points.length; i++)
             {

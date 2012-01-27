@@ -27,7 +27,7 @@ SnakeNinja.Laser = function(game)
 
         if (this.Alive)
         {
-            if (this.remote)
+            if (!this.remote)
             {
                 // Add new point.
                 this.Position.Update(this.Speed * timePassed, this.Direction);
@@ -41,7 +41,7 @@ SnakeNinja.Laser = function(game)
     
     this.Draw = function(graphics)
     {
-        if (this.Alive > 0)
+        if (this.Alive)
         {
             for (var i = 0; i < this.Points.length; i++)
             {
