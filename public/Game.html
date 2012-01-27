@@ -2,14 +2,19 @@
 <body>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="jcanvas.min.js"></script> 
-<script type="text/javascript" src="js/socket.io.min.js"></script> 
-<script type="text/javascript" src="js/socket.test.js"></script> 
 
-<script type="text/javascript" src="Game.js"></script>
-<script type="text/javascript" src="Structures.js"></script>
-<script type="text/javascript" src="Game.js"></script>
+<script type="text/javascript">
+    jQuery(function()
+    {
+        var canvas = jQuery("#GameCanvas");
+    
+        $("canvas").drawImage({
+            source: "images/fish.jpg",
+            x: 150, y: 150
+    });
+</script>
 
-<canvas class="SnakeNinja" style="background-color:Red"></canvas>
+<canvas id="GameCanvas" width="300" height="500"></canvas>
 
 </body>
 </html>

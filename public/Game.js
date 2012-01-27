@@ -4,40 +4,6 @@ var UPDATE_TIME = 1000 / UPDATES_PER_SECOND;
 var CANVAS_WIDTH = 800;
 var CANVAS_HEIGHT = 600;
 
-var imgPizza = new Image();
-var imgSnake = new Image();
-var imgPowerup = new Image();
-var sndEat = new Audio();
-var sndPowerup = new Audio();
-
-var itemstoload = {
-    "sndEat" : {
-        loaded : false,
-        type : "sound",
-        src : "",
-        obj : sndEat },
-    "sndPowerup" : {
-        loaded : false,
-        type : "sound",
-        src : "",
-        obj : sndPowerup },
-    "imgPizza" : {
-        loaded : false,
-        type : "image",
-        src : "imagePizza.png",
-        obj : imgPizza },
-    "imgPowerup" : {
-        loaded : false,
-        type : "image",
-        src : "imgPowerup.png",
-        obj : imgPowerup },
-    "imgSnake" : {
-        loaded : false,
-        type : "image",
-        src : "imgSnake.png",
-        obj : imgSnake }
-};
-
 var Game = function () {
 	var that = this;
 	var gameLoop = null;
@@ -53,45 +19,6 @@ var Game = function () {
     this.mySnake = null;
     this.Pizzas = [];
     this.Powerups = [];
-    
-    /** load images and sound */
-    var loadResources = function () {
-	    for (var item in itemstoload)
-		    loadResource(item);
-	};
-
-	var loadResource = function (name) {
-	    var toload = itemstoload[name];
-	    if (!toload) {
-	        alert('undefined loadable');
-	        return;
-	    }
-
-	    if (toload.type == "sound") {
-	        toload.obj.src = toload.src;
-	        toload.obj.preload = "auto";
-	        toload.obj.addEventListener('canplaythrough', function () { toload.loaded = true; checkAllLoaded(); }, false);
-	    }
-
-	    if (toload.type == "image") {
-	        toload.obj.src = toload.src;
-	        toload.obj.onload = function () { toload.loaded = true; checkAllLoaded(); };
-	    }
-	};
-
-	var checkAllLoaded = function () {
-	    var flag = true;
-	    for (var item in itemstoload)
-            if (itemstoload[item].loaded !== true)
-                flag = false;
-	    
-	    if (flag && !this.loaded)
-	    {
-            this.loaded = true;
-            jQuery(that).trigger("ResourcesLoaded");
-	    }
-	};
-    
 
     var initCanvas = function () {
         jQuery(".SnakeNinja").each(function () {
@@ -108,7 +35,6 @@ var Game = function () {
 
 	this.Init = function () {
         initCanvas();
-        loadResources();
 		gameLoop = setInterval(Loop, UPDATE_TIME);
 	};
     
@@ -124,7 +50,8 @@ var Game = function () {
         if (that.mySnake)
             that.mySnake.ReceiveInput({
                 left: leftKey,
-                right: rightKey});
+                right: rightKey,
+                up: upKey });
         
 		that.Update(timediff);
 		that.Draw();
@@ -158,6 +85,7 @@ var Game = function () {
     
     var rightKey = false;
     var leftKey = false;
+	var upKey = false;
 	var spaceKey = false;
 
 	var enter = false;
@@ -165,18 +93,19 @@ var Game = function () {
     this.onKeyUp = function (evt) {
         if (evt.keyCode == 39) rightKey = false;
 		else if (evt.keyCode == 37) leftKey = false;
+		if (evt.keyCode == 38) upKey = false;
         
-		if (evt.keyCode == 17) spaceKey = false;
+		if (evt.keyCode == 32) spaceKey = false;
+
 		if (evt.keyCode == 13) enter = false;
 	};
     
     this.onKeyDown = function (evt) {
         if (evt.keyCode == 39) rightKey = true;
 	    else if (evt.keyCode == 37) leftKey = true;
+	    if (evt.keyCode == 38) upKey = true;
         
-	    if (evt.keyCode == 17){ spaceKey = true;
-            alert("ctrl clicked");
-	    }
+	    if (evt.keyCode == 32) spaceKey = true;
 
 	    //if (evt.keyCode == 13)
 	};

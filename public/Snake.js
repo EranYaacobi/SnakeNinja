@@ -1,7 +1,6 @@
 var PLAYER_SPEED = 100;
 var PLAYER_ROTATION_SPEED = 420;
 var PLAYER_RELOAD_TIME = 0.25;
-var SPACE_FRICTION = 2;
 
 var Snake = function(name, guid, remote, team)
 {
@@ -13,7 +12,6 @@ var Snake = function(name, guid, remote, team)
     this.Speed = PLAYER_SPEED;
     this.RotationSpeed = PLAYER_ROTATION_SPEED;
     this.Alive = false;
-    this.Input
     
     this.Spawn = function(head, direction, length)
     {
@@ -22,6 +20,7 @@ var Snake = function(name, guid, remote, team)
         this.Points.push(new Structures.TimedPoint(length, head))
 	    this.Direction = direction;
 	    this.Alive = true;
+        this.Action = Structures.Action.Nothing
 	};
     
     this.Update = function(timePassed)
@@ -60,6 +59,19 @@ var Snake = function(name, guid, remote, team)
         }
     }
     
+    this.ReceiveInput = function(keys)
+    {
+        this.Keys = keys;
+    }
+    
+    this.PerformAction = function()
+    {
+        switch (this.Action)
+        {
+            case Structures.Action.Shoot: this.Shoot();
+        }
+    }
+    
     this.Shoot = function ()
     {
         if (this.Lives > 0 && this.Reload === 0)
@@ -71,105 +83,7 @@ var Snake = function(name, guid, remote, team)
 	        this.Reload = PLAYER_RELOAD_TIME;
 	    }
 	};
-    
-    this.ReceiveInput = function(keys)
-    {
-        this.Keys = keys;
-    }
 }
-
-
-
-	this.Update = function (dt) {
-	    var SMOOTHING_THRESHOLD = 600;
-	    /** Different calculation for enemy client */
-	    if (!this.isMyPlayer) {
-	        /** Animation smoothing */
-	        if (this.state1 && this.state2) {
-	            var basestate = this.State1IsBase ? this.state1 : this.state2;
-	            var movestate = this.State1IsBase ? this.state2 : this.state1;
-
-	            var timeSinceLastData = new Date().getTime() - game.lastDataReceiveTime;
-	            var timestampdiff = movestate.timestamp - basestate.timestamp;
-
-	            var rotdiff = movestate.Rot - basestate.Rot;
-	            var posdiffX = movestate.Pos.X - basestate.Pos.X;
-	            var posdiffY = movestate.Pos.Y - basestate.Pos.Y;
-
-	            if (posdiffX >= SMOOTHING_THRESHOLD || posdiffX <= -SMOOTHING_THRESHOLD || posdiffY >= SMOOTHING_THRESHOLD || posdiffY <= -SMOOTHING_THRESHOLD) {
-	                basestate = movestate;
-	                timestampdiff = 0;
-	            }
-
-	            if (timestampdiff == 0) timestampdiff = timeSinceLastData;
-
-	            this.Rotation = basestate.Rot + rotdiff * (timeSinceLastData / timestampdiff);
-	            this.Pos.X = basestate.Pos.X + posdiffX * (timeSinceLastData / timestampdiff);
-	            this.Pos.Y = basestate.Pos.Y + posdiffY * (timeSinceLastData / timestampdiff);
-	        }
-	        return;
-	    }
-
-	    if (this.Rotating !== 0) this.Rotation += this.Rotating * dt * PLAYER_ROTATION_SPEED;
-
-	    if (this.Shooting === true)
-	        this.Shoot();
-
-	    if (this.Reload !== 0) {
-	        this.Reload -= dt;
-	        if (this.Reload <= 0) this.Reload = 0;
-	    }
-
-	    if (this.Pos.X >= CANVASWIDTH + CANVAS_BORDER_SPACE) this.Pos.X -= CANVASWIDTH;
-	    if (this.Pos.X <= -CANVAS_BORDER_SPACE) this.Pos.X += CANVASWIDTH;
-	    if (this.Pos.Y >= CANVASHEIGHT + CANVAS_BORDER_SPACE) this.Pos.Y -= CANVASHEIGHT;
-	    if (this.Pos.Y <= -CANVAS_BORDER_SPACE) this.Pos.Y += CANVASHEIGHT;
-
-
-	    /** calculate forward */
-	    this.Forward.X = Math.sin(Math.PI + this.Rotation * Math.PI / 180);
-	    this.Forward.Y = Math.cos(Math.PI + this.Rotation * Math.PI / 180);
-
-	    /** acceleration effect on speed */
-	    if (this.Accelerating) {
-	        this.Speed.X += dt * PLAYER_ACCELERATION_SPEED * this.Forward.X * this.Accelerating;
-	        this.Speed.Y += dt * PLAYER_ACCELERATION_SPEED * this.Forward.Y * this.Accelerating;
-	    }
-
-	    /** speed cap */
-	    if (this.Speed.X >= PLAYER_SPEED_CAP) this.Speed.X = PLAYER_SPEED_CAP;
-	    if (this.Speed.X <= -PLAYER_SPEED_CAP) this.Speed.X = -PLAYER_SPEED_CAP;
-	    if (this.Speed.Y >= PLAYER_SPEED_CAP) this.Speed.Y = PLAYER_SPEED_CAP;
-	    if (this.Speed.Y <= -PLAYER_SPEED_CAP) this.Speed.Y = -PLAYER_SPEED_CAP;
-
-	    /** Deceleration */
-	    if (this.Speed.X >= 0) {
-	        this.Speed.X += -dt * SPACE_FRICTION;
-	        if (this.Speed.X <= 0)
-	            this.Speed.X = 0;
-	    }
-
-	    var frictiondir;
-	    frictiondir = this.Speed.X >= 0 ? -1 : 1;
-	    this.Speed.X += frictiondir * dt * SPACE_FRICTION;
-	    if ((frictiondir <= 0 && this.Speed.X <= 0) || (frictiondir >= 0 && this.Speed.X >= 0)) this.Speed.X = 0;
-
-	    frictiondir = this.Speed.Y >= 0 ? -1 : 1;
-	    this.Speed.Y += frictiondir * dt * SPACE_FRICTION;
-	    if ((frictiondir <= 0 && this.Speed.Y <= 0) || (frictiondir >= 0 && this.Speed.Y >= 0)) this.Speed.Y = 0;
-
-	    this.Pos.X += this.Speed.X;
-	    this.Pos.Y += this.Speed.Y * -1;
-	};
-
-	this.Hit = function () {
-		if (this.Alive)
-		{
-			this.Lives--;
-			if (this.Lives <= 0)
-			    this.Destroy();
-		}
-	};
 
 	this.Destroy = function () {
 	    //FIX. badly
