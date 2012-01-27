@@ -1,6 +1,5 @@
 var LASER_SPEED = 100;
 var LASER_ROTATION_SPEED = 420;
-var LASER_RELOAD_TIME = 0.25;
 
 SnakeNinja.Laser = function(game)
 {
@@ -45,7 +44,7 @@ SnakeNinja.Laser = function(game)
         {
             for (var i = 0; i < this.Points.length; i++)
             {
-                var image = this.Game.Resources["imgLaser"];
+                var image = this.Game.Resources.imgLaser;
                 
                 graphics.save();
                 graphics.translate(this.Position.X, this.Position.Y);

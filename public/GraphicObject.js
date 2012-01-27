@@ -1,4 +1,4 @@
 SnakeNinja.GraphicObject = function()
 {
     
-}
+};
