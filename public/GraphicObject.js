@@ -1,4 +1,4 @@
-Game.GraphicObject = function()
+SnakeNinja.GraphicObject = function()
 {
     
 }
