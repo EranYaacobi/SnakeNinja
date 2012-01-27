@@ -1,0 +1,4 @@
+var Laser = function(game)
+{
+
+}

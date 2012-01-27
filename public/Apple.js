@@ -10,7 +10,7 @@ var Apple = function(game)
     
     this.Draw = function(graphics)
     {
-        graphics.drawImage(appleimage, x, y);
+        graphics.drawImage(game.Resoucres[appleimage], x, y);
     }
     
     this.Update = function(ts)
@@ -21,7 +21,7 @@ var Apple = function(game)
     
     this.Eaten = function (snake)
     {
-        snake.length + sizes;
+        snake.Increase(sizes);
     }
     
 }
