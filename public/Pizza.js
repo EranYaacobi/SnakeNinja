@@ -11,7 +11,7 @@ var Pizza = function(game)
     this.Draw = function(graphics)
     {
         var img = game.Resources["appleimage" + size];
-        graphics.drawImage(game.Resources["appleimage" + size], x - img.width/2  , y - img.height/2);
+        graphics.drawImage(img, x - img.width/2  , y - img.height/2);
     }
     
     this.Update = function(ts)
