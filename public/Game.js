@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-=======
-
-jQuery(function(){
-        var canvas = jQuery("#GameCanvas");
-    
-        canvas.drawImage({
-            source: "images/fish.jpg",
-            x: 150, y: 150
-    });
-});
-
-
->>>>>>> origin/master
 var UPDATES_PER_SECOND = 30;
 var UPDATE_TIME = 1000 / UPDATES_PER_SECOND;
 
@@ -40,7 +26,7 @@ var Game = function () {
             that.canvas.width = CANVAS_WIDTH;
             that.canvas.height = CANVAS_HEIGHT;
             that.context2D = that.canvas.getContext('2d');
-            that.backBuffer = jQuery('<canvas />');
+            that.backBuffer = document.createElement('canvas');//jQuery('<canvas />');
             that.backBuffer.width = CANVAS_WIDTH;
             that.backBuffer.height = CANVAS_HEIGHT;
             that.backBufferContext2D = that.backBuffer.getContext('2d');
@@ -119,10 +105,6 @@ var Game = function () {
 	    //if (evt.keyCode == 13)
 	};
 };
-<<<<<<< HEAD
-=======
-};
->>>>>>> origin/master
 
 jQuery(function () {
     var game = new Game();
