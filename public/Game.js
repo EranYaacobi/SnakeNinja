@@ -143,12 +143,14 @@ SnakeNinja.Game = function () {
                 action: actionKey });
         
         /** update pizzas */
+        for (var i in that.Pizzas)
+            that.Pizzas[i].Update(timediff);
         
         /** update powerups */
         
         /** update snakes */
         if (that.mySnake)
-            that.mySnake.Update(that.backBufferContext2D);
+            that.mySnake.Update(timediff);
 	};
 	
 	this.Draw = function () {
