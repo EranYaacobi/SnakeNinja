@@ -147,6 +147,8 @@ SnakeNinja.Game = function () {
         /** update powerups */
         
         /** update snakes */
+        if (that.mySnake)
+            that.mySnake.Update(that.backBufferContext2D);
 	};
 	
 	this.Draw = function () {
