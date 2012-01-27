@@ -184,7 +184,7 @@ SnakeNinja.Game = function () {
 	    else if (evt.keyCode == 37) leftKey = true;
 	    if (evt.keyCode == 32) actionKey = true;
 
-	    //if (evt.keyCode == 13)
+	    if (evt.keyCode == 13) enter = true;
 	};
 };
 
