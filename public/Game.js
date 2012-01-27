@@ -63,16 +63,16 @@ SnakeNinja.Game = function () {
 	    }
 
 	    if (toload.type == "sound") {
-            that.resources[name] = new Audio();
-	        that.resources[name].src = toload.src;
-	        that.resources[name].preload = "auto";
-	        that.resources[name].addEventListener('canplaythrough', function () { toload.loaded = true; checkAllLoaded(callback); }, false);
+            that.Resources[name] = new Audio();
+	        that.Resources[name].src = toload.src;
+	        that.Resources[name].preload = "auto";
+	        that.Resources[name].addEventListener('canplaythrough', function () { toload.loaded = true; checkAllLoaded(callback); }, false);
 	    }
 
 	    if (toload.type == "image") {
-            that.resources[name] = new Image();
-	        that.resources[name].src = toload.src;
-	        that.resources[name].onload = function () { toload.loaded = true; checkAllLoaded(callback); };
+            that.Resources[name] = new Image();
+	        that.Resources[name].src = toload.src;
+	        that.Resources[name].onload = function () { toload.loaded = true; checkAllLoaded(callback); };
 	    }
 	};
 
