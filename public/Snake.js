@@ -1,35 +1,3 @@
-var Point = function(x, y)
-{
-    this.x = x;
-    this.y = y;
-    this.Advance = function(amount, direction)
-    {
-        this.x += Math.sin(Math.PI + this.Rotation * Math.PI / 180);
-        this.y += Math.cos(Math.PI + this.Rotation * Math.PI / 180);
-    }
-}
-
-var TimedPoint = function(time, point)
-{
-    this.time = time;
-    this.point = point;
-    this.Advance = function(timePassed, speed, direction)
-    {
-        this.time -= timePassed;
-        this.point.Advance(speed * timePassed, direction);
-    }
-    
-    this.AddTime = function(timeAdded)
-    {
-        this.time += timeAdded;
-    }
-    
-    this.IsAlive = function()
-    {
-        return (time > 0);
-    }
-}
-
 var PLAYER_SPEED = 100;
 var PLAYER_ROTATION_SPEED = 420;
 var PLAYER_RELOAD_TIME = 0.25;
@@ -45,12 +13,13 @@ var Snake = function(name, guid, remote, team)
     this.Speed = PLAYER_SPEED;
     this.RotationSpeed = PLAYER_ROTATION_SPEED;
     this.Alive = false;
+    this.Input
     
     this.Spawn = function(head, direction, length)
     {
         this.Length = length;
         this.Points = [];
-        this.Points.push(new TimedPoint(length, head))
+        this.Points.push(new Structures.TimedPoint(length, head))
 	    this.Direction = direction;
 	    this.Alive = true;
 	};
@@ -58,26 +27,43 @@ var Snake = function(name, guid, remote, team)
     this.Update = function(timePassed)
     {
         timePassed = timePassed / 1000;
-        var newPoint = new TimedPoint(this.Length, this.Head.x, this.Head.y);
-        newPoint.Advance(timePassed, this.Speed, this.Direction);
-        this.Points.push(newPoint);
         
-        // Advance head\tail.
-        for (var i = 0; i < this.Points.length; i++)
+        if (remote == false)
         {
-            var point = this.Points[i];
+            // Add new point.
+            var newPoint = new Structures.TimedPoint(this.Length, this.Head.x, this.Head.y);
+            newPoint.Advance(timePassed, this.Speed, this.Direction);
+            this.Points.push(newPoint);
             
-            if (point.IsAlive == false)
-                this.Points.shift;
-            else
-                break;
-        }    
+            // Advance head\tail.
+            for (var i = 0; i < this.Points.length; i++)
+            {
+                var point = this.Points[i];
+                
+                if (point.IsAlive == false)
+                    this.Points.shift;
+                else
+                    break;
+            }
+            
+            // Perform actions.
+            if (this.Keys.left == true)
+                this.Direction += this.RotationSpeed;
+            if (this.Keys.right == true)
+                this.Direction -= this.RotationSpeed;
+            if (this.Keys.action == true)
+                this.PerformAction();
+        }
+        else
+        {
+            // Implement ugly code.
+        }
     }
     
-    this.Shoot = function () {
-        if (this.Lives > 0 && this.Reload === 0) {
-
-
+    this.Shoot = function ()
+    {
+        if (this.Lives > 0 && this.Reload === 0)
+        {
 	        var shot = new Laser();
 	        shot.Init(this.Pos.X, this.Pos.Y, this.Rotation, this.shiptype, this.shotguid++);
 	        this.Shots.push(shot);
@@ -85,6 +71,11 @@ var Snake = function(name, guid, remote, team)
 	        this.Reload = PLAYER_RELOAD_TIME;
 	    }
 	};
+    
+    this.ReceiveInput = function(keys)
+    {
+        this.Keys = keys;
+    }
 }
 
 
