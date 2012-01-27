@@ -5,9 +5,7 @@ jQuery(function(){
             source: "images/fish.jpg",
             x: 150, y: 150
     });
-<<<<<<< HEAD
 });
-=======
 
 var UPDATES_PER_SECOND = 30;
 var UPDATE_TIME = 1000 / UPDATES_PER_SECOND;
@@ -31,4 +29,3 @@ var Game = function () {
 	this.Draw = function () {
 	};
 };
->>>>>>> Github/master
