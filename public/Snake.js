@@ -92,7 +92,7 @@ SnakeNinja.Snake = function(game)
                 graphics.backBufferContext2D.restore();*/
                 
                 graphics.fillStyle = this.Remote ? "rgba(0, 255, 0, 0.8)" : "rgba(255, 0, 0, 0.8)";
-                graphics.drawArc(this.Points[i].x, this.Points[i].y, 4, 0, 360, true);
+                graphics.arc(this.Points[i].x, this.Points[i].y, 4, 0, 360, true);
             }
 	    }
     };
