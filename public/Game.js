@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+=======
+
+jQuery(function(){
+        var canvas = jQuery("#GameCanvas");
+    
+        canvas.drawImage({
+            source: "images/fish.jpg",
+            x: 150, y: 150
+    });
+});
+
+
+>>>>>>> origin/master
 var UPDATES_PER_SECOND = 30;
 var UPDATE_TIME = 1000 / UPDATES_PER_SECOND;
 
@@ -105,6 +119,10 @@ var Game = function () {
 	    //if (evt.keyCode == 13)
 	};
 };
+<<<<<<< HEAD
+=======
+};
+>>>>>>> origin/master
 
 jQuery(function () {
     var game = new Game();
