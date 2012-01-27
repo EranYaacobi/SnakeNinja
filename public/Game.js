@@ -77,8 +77,8 @@ var Game = function () {
         for (var item in resourcestoload)
             if (resourcestoload[item].loaded !== true)
                 flag = false;
-	    
-	    if (flag && !this.loaded)
+
+        if (flag && !this.loaded)
             callback();
 	};
     
