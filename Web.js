@@ -5,7 +5,7 @@ var app = express.createServer(
 );
 
 
-io = require('socket.io').listen(app)
+io = require('socket.io').listen(app);
 
 app.get("/", function (req,res)
 {
