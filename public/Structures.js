@@ -2,12 +2,12 @@ SnakeNinja.Structures = {};
 
 SnakeNinja.Structures.Point = function(x, y)
 {
-    this.x = x;
-    this.y = y;
+    this.X = x;
+    this.X = y;
     this.Advance = function(amount, direction)
     {
-        this.x += amount * Math.sin(Math.PI + direction * Math.PI / 180);
-        this.y += amount * Math.cos(Math.PI + direction * Math.PI / 180);
+        this.X += amount * Math.sin(Math.PI + direction * Math.PI / 180);
+        this.Y += amount * Math.cos(Math.PI + direction * Math.PI / 180);
     };
 };
 
