@@ -1,5 +1,4 @@
-var LASER_SPEED = 100;
-var LASER_ROTATION_SPEED = 420;
+var LASER_SPEED = 60;
 
 SnakeNinja.Laser = function(game)
 {
@@ -15,7 +14,6 @@ SnakeNinja.Laser = function(game)
         this.Direction = direction;
         
         this.Speed = LASER_SPEED;
-        this.RotationSpeed = LASER_ROTATION_SPEED;
         
         this.Alive = true;
     };
@@ -28,7 +26,6 @@ SnakeNinja.Laser = function(game)
         {
             if (!this.remote)
             {
-                // Add new point.
                 this.Position.Update(this.Speed * timePassed, this.Direction);
             }
             else
@@ -53,7 +50,7 @@ SnakeNinja.Laser = function(game)
                 graphics.drawImage(image, -image.width / 2, -image.height / 2);
                 graphics.backBufferContext2D.restore();
             }
-	    }
+        }
     };
     
     this.Destroy = function()

@@ -3,7 +3,7 @@ SnakeNinja.Structures = {};
 SnakeNinja.Structures.Point = function(x, y)
 {
     this.X = x;
-    this.X = y;
+    this.Y = y;
     this.Advance = function(amount, direction)
     {
         this.X += amount * Math.sin(Math.PI + direction * Math.PI / 180);
@@ -13,23 +13,23 @@ SnakeNinja.Structures.Point = function(x, y)
 
 SnakeNinja.Structures.TimedPoint = function(time, point)
 {
-    this.time = time;
-    this.point = point;
+    this.Time = time;
+    this.Point = point;
     this.Update = function(timePassed, speed, direction)
     {
-        this.time -= timePassed;
+        this.Time -= timePassed;
         if (speed)
-            this.point.Advance(speed * timePassed, direction);
+            this.Point.Advance(speed * timePassed, direction);
     };
     
     this.AddTime = function(timeAdded)
     {
-        this.time += timeAdded;
+        this.Time += timeAdded;
     };
     
     this.IsAlive = function()
     {
-        return (time > 0);
+        return (this.Time > 0);
     };
 };
 
