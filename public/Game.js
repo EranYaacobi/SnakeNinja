@@ -1,14 +1,3 @@
-
-jQuery(function(){
-        var canvas = jQuery("#GameCanvas");
-    
-        canvas.drawImage({
-            source: "images/fish.jpg",
-            x: 150, y: 150
-    });
-});
-
-
 var UPDATES_PER_SECOND = 30;
 var UPDATE_TIME = 1000 / UPDATES_PER_SECOND;
 
@@ -23,6 +12,13 @@ var Game = function () {
     this.context2D = null;
     this.backBuffer = null;
     this.backBufferContext2D = null;
+    
+    var lastFrame = null;
+    
+    this.Snakes = [];
+    this.mySnake = null;
+    this.Pizzas = [];
+    this.Powerups = [];
 
     var initCanvas = function () {
         jQuery(".SnakeNinja").each(function () {
@@ -30,6 +26,10 @@ var Game = function () {
             that.canvas.width = CANVAS_WIDTH;
             that.canvas.height = CANVAS_HEIGHT;
             that.context2D = that.canvas.getContext('2d');
+            that.backBuffer = document.createElement('canvas');//jQuery('<canvas />');
+            that.backBuffer.width = CANVAS_WIDTH;
+            that.backBuffer.height = CANVAS_HEIGHT;
+            that.backBufferContext2D = that.backBuffer.getContext('2d');
         });
     };
 
@@ -37,17 +37,44 @@ var Game = function () {
         initCanvas();
 		gameLoop = setInterval(Loop, UPDATE_TIME);
 	};
+    
+    this.Start = function () {
+        lastFrame = new Date().getTime();
+    };
 
 	var Loop = function () {
-		that.Update();
+        var now = new Date().getTime();
+        var timediff = now - lastFrame;
+        lastFrame = new Date().getTime();
+        
+		that.Update(timediff);
 		that.Draw();
 	};
 	
-	this.Update = function () {
-	};	
+	this.Update = function (timediff) {
+        /** update pizzas */
+        
+        /** update powerups */
+        
+        /** update snakes */
+	};
 	
 	this.Draw = function () {
+        /** clear backbuffer */
+	    that.backBufferContext2D.clearRect(0, 0, that.backBuffer.width, that.backBuffer.height);
         
+        /** draw pizzas */
+        
+        /** draw powerups */
+        
+        /** draw snakes */
+        
+        drawBackBuffer();
+	};
+    
+    var drawBackBuffer = function () {
+		that.context2D.clearRect(0, 0, that.canvas.width, that.canvas.height);
+		that.context2D.drawImage(that.backBuffer, 0, 0);
 	};
     
     var rightKey = false;
@@ -77,7 +104,6 @@ var Game = function () {
 
 	    //if (evt.keyCode == 13)
 	};
-};
 };
 
 jQuery(function () {
