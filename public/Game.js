@@ -8,23 +8,23 @@ var resourcestoload = {
     "sndEat" : {
         loaded : false,
         type : "sound",
-        src : "explosion.ogg"},
+        src : ""},
     "sndPowerup" : {
         loaded : false,
         type : "sound",
-        src : "Laser_s.ogg"},
+        src : ""},
     "imgSnake" : {
         loaded : false,
         type : "image",
-        src : "evil_laser.ogg"},
+        src : ""},
     "imgPizza" : {
         loaded : false,
         type : "image",
-        src : "greenLaserRay.png"},
+        src : ""},
     "imgPowerup" : {
         loaded : false,
         type : "image",
-        src : "redLaserRay.png"}
+        src : ""}
 };
 
 var Game = function () {
