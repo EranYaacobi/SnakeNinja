@@ -66,6 +66,35 @@ var Snake = function(game)
         }
     }
     
+    this.Draw = function()
+    {
+        if (this.Alive > 0)
+        {
+            for (var i = 0; i < this.Points.length; i++)
+            {
+                //var img = this.shiptype == 1 ? imgship1 : imgship2;
+                //game.backBufferContext2D.save();
+    	        //game.backBufferContext2D.translate(this.X, this.Pos.Y);
+    
+        		//game.backBufferContext2D.font = "bold 10px sans-serif";
+        		//game.backBufferContext2D.fillStyle = "White";
+        		//game.backBufferContext2D.fillText(this.name || "No Name", -img.width / 2, -img.height / 2 - 10);
+        
+        		//game.backBufferContext2D.fillStyle = this.isMyPlayer ? "rgba(0, 255, 0, 0.8)" : "rgba(255, 0, 0, 0.8)";
+        		//game.backBufferContext2D.fillRect(-img.width / 2, -img.height / 2, 5 * this.Lives, 5);
+        		//game.backBufferContext2D.strokeStyle = "rgba(250,250,250, 1)";
+        		//game.backBufferContext2D.strokeRect(-img.width / 2, -img.height / 2, 50, 5);
+    
+    	        //game.backBufferContext2D.rotate(this.Rotation * Math.PI / 180);
+    	        //game.backBufferContext2D.drawImage(img, -img.width / 2, -img.height / 2);
+    	        //game.backBufferContext2D.restore();
+                
+                game.backBufferContext2D.fillStyle = this.Remote ? "rgba(0, 255, 0, 0.8)" : "rgba(255, 0, 0, 0.8)";
+                game.backBufferContext2D.drawArc(this.Points[i].x, this.Points[i].y, 4, 0, 360, true);
+            }
+	    }
+    }
+    
     this.ReceiveInput = function(keys)
     {
         this.Keys = keys;
@@ -104,41 +133,19 @@ var Snake = function(game)
             this.Points[i].Update(length);
     }
     
-    this.Destroy = function ()
+    this.Destroy = function()
     {
 	    this.Alive = false;
-	    if (jQuery("input:checked").length) explosionsound.play();
-	    var explosion = jQuery("#explosiondiv" + this.shiptype).css('left', this.Pos.X - 50).css('top', this.Pos.Y - 60).removeClass("invis");
-	    setTimeout(functionS
-	        explosion.addClass("invis");
-	    }, 750);
+	    // if (jQuery("input:checked").length) explosionsound.play();
+	    //var explosion = jQuery("#explosiondiv" + this.shiptype).css('left', this.Pos.X - 50).css('top', this.Pos.Y - 60).removeClass("invis");
 
-		if (this.isMyPlayer) game.myPlayerDeath();
+		if (this.isMyPlayer)
+            game.myPlayerDeath();
 	};
 }
 
-	this.Draw = function () {
-	    if (this.Lives > 0) {
-	        var img = this.shiptype == 1 ? imgship1 : imgship2;
-	        game.backBufferContext2D.save();
-	        game.backBufferContext2D.translate(this.Pos.X, this.Pos.Y);
-
-		game.backBufferContext2D.font = "bold 10px sans-serif";
-		game.backBufferContext2D.fillStyle = "White";
-		game.backBufferContext2D.fillText(this.name || "No Name", -img.width / 2, -img.height / 2 - 10);
-
-		game.backBufferContext2D.fillStyle = this.isMyPlayer ? "rgba(0, 255, 0, 0.8)" : "rgba(255, 0, 0, 0.8)";
-		game.backBufferContext2D.fillRect(-img.width / 2, -img.height / 2, 5 * this.Lives, 5);
-		game.backBufferContext2D.strokeStyle = "rgba(250,250,250, 1)";
-		game.backBufferContext2D.strokeRect(-img.width / 2, -img.height / 2, 50, 5);
-
-	        game.backBufferContext2D.rotate(this.Rotation * Math.PI / 180);
-	        game.backBufferContext2D.drawImage(img, -img.width / 2, -img.height / 2);
-	        game.backBufferContext2D.restore();
-	    }
-	};
-
-	this.UpdateData = function (/** server player obj */playerdata, T) {
+// server object data.
+/*	this.UpdateData = function (playerdata, T) {
 	    if (this.State1IsBase) {
 	        this.state1 = {
 	            Pos: playerdata.P,
@@ -160,5 +167,5 @@ var Snake = function(game)
 			this.Lives = playerdata.L
 	    if (this.Lives == 0 && this.Alive)
 	        this.Destroy();
-	};
+	};*/
 };
