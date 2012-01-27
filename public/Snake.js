@@ -2,16 +2,19 @@ var PLAYER_SPEED = 100;
 var PLAYER_ROTATION_SPEED = 420;
 var PLAYER_RELOAD_TIME = 0.25;
 
-var Snake = function(name, guid, remote, team)
+var Snake = function(game)
 {
-    this.Name = name;
-    this.Guid = guid;
-    this.Remote = remote
-    
-    this.Team = team;
-    this.Speed = PLAYER_SPEED;
-    this.RotationSpeed = PLAYER_ROTATION_SPEED;
-    this.Alive = false;
+    this.Init = function(name, guid, remote, team)
+    {
+        this.Name = name;
+        this.Guid = guid;
+        this.Remote = remote
+        
+        this.Team = team;
+        this.Speed = PLAYER_SPEED;
+        this.RotationSpeed = PLAYER_ROTATION_SPEED;
+        this.Alive = false;
+    }
     
     this.Spawn = function(head, direction, length)
     {
@@ -54,7 +57,7 @@ var Snake = function(name, guid, remote, team)
                 if (this.Keys.right == true)
                     this.Direction -= this.RotationSpeed * timePassed;
                 if (this.Keys.action == true)
-                    this.PerformAction(timePassed);
+                    this.PerformAction();
             }
             else
             {
@@ -68,40 +71,51 @@ var Snake = function(name, guid, remote, team)
         this.Keys = keys;
     }
     
-    this.PerformAction = function(timePassed)
+    this.PerformAction = function()
     {
-        switch (this.Action)
+        if (this.ActionReloadTime > 0)
         {
-            case Structures.Action.Shoot: this.Shoot(timePassed);
+            switch (this.Action)
+            {
+                case Structures.Action.Shoot: this.Shoot(timePassed);
+            }
         }
     }
     
-    this.Shoot = function(timePassed)
+    this.Shoot = function()
     {
-        this.action_reload_time -= timePassed;
-        
         var shot = new Laser();
-        
-        shot.Initialize(this.Points[this.Points.length - 1], this.Direction, this.team);
-        this.Shots.push(shot);
-        game.SendShot(shot);
-        this.Reload = PLAYER_RELOAD_TIME;
-	    }
-	}
-}
 
-	this.Destroy = function () {
-	    //FIX. badly
-	    this.Lives = 0;
+        shot.Spawn(this, this.team, this.Points[this.Points.length - 1].point, this.Direction);
+        this.Shots.push(shot);
+        game.AddShot(shot);
+        this.ActionReloadTime = PLAYER_RELOAD_TIME;
+	}
+    
+    this.Increase = function(length)
+    {
+        for (var i = 0; i < this.Points.length; i++)
+            this.Points[i].AddTime(length);
+    }
+    
+    this.Decrease = function(length)
+    {
+        for (var i = 0; i < this.Points.length; i++)
+            this.Points[i].Update(length);
+    }
+    
+    this.Destroy = function ()
+    {
 	    this.Alive = false;
 	    if (jQuery("input:checked").length) explosionsound.play();
 	    var explosion = jQuery("#explosiondiv" + this.shiptype).css('left', this.Pos.X - 50).css('top', this.Pos.Y - 60).removeClass("invis");
-	    setTimeout(function () {
+	    setTimeout(functionS
 	        explosion.addClass("invis");
 	    }, 750);
 
 		if (this.isMyPlayer) game.myPlayerDeath();
 	};
+}
 
 	this.Draw = function () {
 	    if (this.Lives > 0) {
