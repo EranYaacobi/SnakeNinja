@@ -4,6 +4,29 @@ var UPDATE_TIME = 1000 / UPDATES_PER_SECOND;
 var CANVAS_WIDTH = 800;
 var CANVAS_HEIGHT = 600;
 
+var resourcestoload = {
+    "sndEat" : {
+        loaded : false,
+        type : "sound",
+        src : ""},
+    "sndPowerup" : {
+        loaded : false,
+        type : "sound",
+        src : ""},
+    "imgSnake" : {
+        loaded : false,
+        type : "image",
+        src : ""},
+    "imgPizza" : {
+        loaded : false,
+        type : "image",
+        src : ""},
+    "imgPowerup" : {
+        loaded : false,
+        type : "image",
+        src : ""}
+};
+
 var Game = function () {
 	var that = this;
 	var gameLoop = null;
@@ -19,7 +42,49 @@ var Game = function () {
     this.mySnake = null;
     this.Pizzas = [];
     this.Powerups = [];
+    
+    this.resources = {};
+    
+    /** load images and sound */
+    var loadResources = function () {
+        for (var item in resourcestoload)
+            loadResource(item);
+	};
 
+	var loadResource = function (name) {
+        var toload = resourcestoload[name];
+        if (!toload) {
+            alert('undefined loadable');
+            return;
+	    }
+
+	    if (toload.type == "sound") {
+            that.resources[name] = new Audio();
+	        that.resources[name].src = toload.src;
+	        that.resources[name].preload = "auto";
+	        that.resources[name].addEventListener('canplaythrough', function () { toload.loaded = true; checkAllLoaded(); }, false);
+	    }
+
+	    if (toload.type == "image") {
+            that.resources[name] = new Image();
+	        that.resources[name].src = toload.src;
+	        that.resources[name].onload = function () { toload.loaded = true; checkAllLoaded(); };
+	    }
+	};
+
+	var checkAllLoaded = function () {
+        var flag = true;
+        for (var item in resourcestoload)
+            if (resourcestoload[item].loaded !== true)
+                flag = false;
+	    
+	    if (flag && !this.loaded)
+	    {
+            this.loaded = true;
+            jQuery(that).trigger("ResourcesLoaded");
+	    }
+	};
+    
     var initCanvas = function () {
         jQuery(".SnakeNinja").each(function () {
             that.canvas = this;
@@ -32,9 +97,11 @@ var Game = function () {
             that.backBufferContext2D = that.backBuffer.getContext('2d');
         });
     };
+    
 
 	this.Init = function () {
         initCanvas();
+        loadResources();
 		gameLoop = setInterval(Loop, UPDATE_TIME);
 	};
     
