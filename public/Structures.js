@@ -18,7 +18,8 @@ Structures.TimedPoint = function(time, point)
     this.Update = function(timePassed, speed, direction)
     {
         this.time -= timePassed;
-        this.point.Advance(speed * timePassed, direction);
+        if (speed)
+            this.point.Advance(speed * timePassed, direction);
     }
     
     this.AddTime = function(timeAdded)
@@ -30,4 +31,10 @@ Structures.TimedPoint = function(time, point)
     {
         return (time > 0);
     }
+}
+
+Structures.Action =
+{
+    nothing:    0,
+    shoot:      1
 }
