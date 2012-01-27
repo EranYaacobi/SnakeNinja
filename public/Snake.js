@@ -168,4 +168,3 @@ var Snake = function(game)
 	    if (this.Lives == 0 && this.Alive)
 	        this.Destroy();
 	};*/
-};
