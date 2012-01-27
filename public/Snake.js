@@ -4,6 +4,8 @@ var PLAYER_RELOAD_TIME = 0.25;
 
 SnakeNinja.Snake = function(game)
 {
+    this.Game = game;
+    
     this.Init = function(name, guid, remote, team)
     {
         this.Name = name;
@@ -106,18 +108,19 @@ SnakeNinja.Snake = function(game)
         {
             switch (this.Action)
             {
-                case SnakeNinja.Structures.Action.Shoot: this.Shoot(timePassed);
+                case SnakeNinja.Structures.Action.Shoot: this.Shoot();
             }
         }
     };
     
     this.Shoot = function()
     {
-        var shot = new SnakeNinja/Laser();
+        var shot = new SnakeNinja.Laser(this.Game);
+        var shotGuid = Math.random();
 
-        shot.Spawn(this, this.team, this.Points[this.Points.length - 1].point, this.Direction);
+        shot.Init(shotGuid, this.remote, this.team, this, this.Points[this.Points.length - 1].point, this.Direction);
         this.Shots.push(shot);
-        game.AddShot(shot);
+        this.Game.AddShot(shot);
         this.ActionReloadTime = PLAYER_RELOAD_TIME;
 	};
     
@@ -140,7 +143,7 @@ SnakeNinja.Snake = function(game)
 	    //var explosion = jQuery("#explosiondiv" + this.shiptype).css('left', this.Pos.X - 50).css('top', this.Pos.Y - 60).removeClass("invis");
 
 		if (this.isMyPlayer)
-            game.myPlayerDeath();
+            this.Game.myPlayerDeath();
 	};
 };
 
