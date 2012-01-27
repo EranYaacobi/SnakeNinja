@@ -114,9 +114,9 @@ SnakeNinja.Game = function () {
         lastFrame = new Date().getTime();
         that.mySnake = new SnakeNinja.Snake(this);
         that.mySnake.Init("player1", 4, false, 1);
-        that.mySnake.Spawn(new SnakeNinja.Structures.Point(75, 75), 0, 5);
+        that.mySnake.Spawn(new SnakeNinja.Structures.Point(100, 200), 0, 5);
         var pizza = new SnakeNinja.Pizza(this);
-        pizza.Spawn(new SnakeNinja.Structures.Point(50, 50), 2, 30000);
+        pizza.Spawn(new SnakeNinja.Structures.Point(25, 25), 2, 30000);
         this.Pizzas.push(pizza);
     };
 

@@ -1,4 +1,4 @@
-var PLAYER_SPEED = 40;
+var PLAYER_SPEED = 100;
 var PLAYER_ROTATION_SPEED = 215;
 var PLAYER_RELOAD_TIME = 0.25;
 
@@ -47,8 +47,11 @@ SnakeNinja.Snake = function(game)
                     var point = this.Points[i];
                     
                     point.Update(timePassed);
-                    if (!point.IsAlive)
+                    if (!point.IsAlive())
+                    {
                         this.Points.shift();
+                        i -= 1;
+                    }
                 }
                 
                 this.ActionReloadTime -= timePassed;
@@ -90,9 +93,10 @@ SnakeNinja.Snake = function(game)
                 graphics.rotate(this.Rotation * Math.PI / 180);
                 graphics.drawImage(img, -img.width / 2, -img.height / 2);
                 graphics.backBufferContext2D.restore();*/
-                
                 graphics.fillStyle = this.Remote ? "rgba(0, 128, 128, 0.8)" : "rgba(0, 255, 0, 0.8)";
-                graphics.arc(this.Points[i].Point.X, this.Points[i].Point.Y, 4, 0, Math.PI, true);
+                graphics.beginPath();
+                graphics.arc(this.Points[i].Point.X, this.Points[i].Point.Y, 4, 0, 2 * Math.PI, true);
+                graphics.fill();
             }
 	    }
     };

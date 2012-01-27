@@ -1,4 +1,4 @@
-var LASER_SPEED = 60;
+var LASER_SPEED = 120;
 
 SnakeNinja.Laser = function(game)
 {
