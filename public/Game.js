@@ -102,6 +102,8 @@ SnakeNinja.Game = function () {
 
 	this.Init = function () {
         initCanvas();
+        jQuery(document).keydown(that.onKeyDown);
+        jQuery(document).keyup(that.onKeyUp);
         loadResources(function () {
             gameLoop = setInterval(Loop, UPDATE_TIME);
         });
@@ -152,10 +154,13 @@ SnakeNinja.Game = function () {
 	    that.backBufferContext2D.clearRect(0, 0, that.backBuffer.width, that.backBuffer.height);
         
         /** draw pizzas */
+        for (var i in that.Pizzas)
+            that.Pizzas[i].Draw(that.backBufferContext2D);
         
         /** draw powerups */
         
         /** draw snakes */
+        that.mySnake.Draw(that.backBufferContext2D);
         
         drawBackBuffer();
 	};
