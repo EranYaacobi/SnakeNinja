@@ -160,7 +160,8 @@ SnakeNinja.Game = function () {
         /** draw powerups */
         
         /** draw snakes */
-        that.mySnake.Draw(that.backBufferContext2D);
+        if (that.mySnake)
+            that.mySnake.Draw(that.backBufferContext2D);
         
         drawBackBuffer();
 	};
