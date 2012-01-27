@@ -1,3 +1,5 @@
+SnakeNinja = {};
+
 var UPDATES_PER_SECOND = 30;
 var UPDATE_TIME = 1000 / UPDATES_PER_SECOND;
 
@@ -27,7 +29,7 @@ var resourcestoload = {
         src : ""}*/
 };
 
-var Game = function () {
+SnakeNinja.Game = function () {
 	var that = this;
 	var gameLoop = null;
 
@@ -43,7 +45,7 @@ var Game = function () {
     this.Pizzas = [];
     this.Powerups = [];
     
-    this.resources = {};
+    this.Resources = {};
     
     /** load images and sound */
     var loadResources = function (callback) {
@@ -77,8 +79,8 @@ var Game = function () {
         for (var item in resourcestoload)
             if (resourcestoload[item].loaded !== true)
                 flag = false;
-	    
-	    if (flag && !this.loaded)
+
+        if (flag && !this.loaded)
             callback();
 	};
     
@@ -172,6 +174,6 @@ var Game = function () {
 };
 
 jQuery(function () {
-    var game = new Game();
+    var game = new SnakeNinja.Game();
     game.Init();
 });
