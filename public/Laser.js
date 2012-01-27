@@ -57,44 +57,6 @@ SnakeNinja.Laser = function(game)
 	    }
     };
     
-    this.ReceiveInput = function(keys)
-    {
-        this.Keys = keys;
-    };
-    
-    this.PerformAction = function()
-    {
-        if (this.ActionReloadTime > 0)
-        {
-            switch (this.Action)
-            {
-                case SnakeNinja.Structures.Action.Shoot: this.Shoot(timePassed);
-            }
-        }
-    };
-    
-    this.Shoot = function()
-    {
-        var shot = new SnakeNinja/Laser();
-
-        shot.Spawn(this, this.team, this.Points[this.Points.length - 1].point, this.Direction);
-        this.Shots.push(shot);
-        game.AddShot(shot);
-        this.ActionReloadTime = PLAYER_RELOAD_TIME;
-	};
-    
-    this.Increase = function(length)
-    {
-        for (var i = 0; i < this.Points.length; i++)
-            this.Points[i].AddTime(length);
-    };
-    
-    this.Decrease = function(length)
-    {
-        for (var i = 0; i < this.Points.length; i++)
-            this.Points[i].Update(length);
-    };
-    
     this.Destroy = function()
     {
 	    this.Alive = false;
