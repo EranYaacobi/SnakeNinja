@@ -16,11 +16,11 @@ var resourcestoload = {
     "imgSnake" : {
         loaded : false,
         type : "image",
-        src : ""},
+        src : ""},*/
     "imgPizza" : {
         loaded : false,
         type : "image",
-        src : ""},
+        src : "Images/pizza.gif"}/*,
     "imgPowerup" : {
         loaded : false,
         type : "image",
