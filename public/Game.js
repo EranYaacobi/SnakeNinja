@@ -5,7 +5,7 @@ var CANVAS_WIDTH = 800;
 var CANVAS_HEIGHT = 600;
 
 var resourcestoload = {
-    "sndEat" : {
+    /*"sndEat" : {
         loaded : false,
         type : "sound",
         src : ""},
@@ -24,7 +24,7 @@ var resourcestoload = {
     "imgPowerup" : {
         loaded : false,
         type : "image",
-        src : ""}
+        src : ""}*/
 };
 
 var Game = function () {
@@ -46,12 +46,12 @@ var Game = function () {
     this.resources = {};
     
     /** load images and sound */
-    var loadResources = function () {
+    var loadResources = function (callback) {
         for (var item in resourcestoload)
-            loadResource(item);
+            loadResource(item, callback);
 	};
 
-	var loadResource = function (name) {
+	var loadResource = function (name, callback) {
         var toload = resourcestoload[name];
         if (!toload) {
             alert('undefined loadable');
@@ -62,27 +62,24 @@ var Game = function () {
             that.resources[name] = new Audio();
 	        that.resources[name].src = toload.src;
 	        that.resources[name].preload = "auto";
-	        that.resources[name].addEventListener('canplaythrough', function () { toload.loaded = true; checkAllLoaded(); }, false);
+	        that.resources[name].addEventListener('canplaythrough', function () { toload.loaded = true; checkAllLoaded(callback); }, false);
 	    }
 
 	    if (toload.type == "image") {
             that.resources[name] = new Image();
 	        that.resources[name].src = toload.src;
-	        that.resources[name].onload = function () { toload.loaded = true; checkAllLoaded(); };
+	        that.resources[name].onload = function () { toload.loaded = true; checkAllLoaded(callback); };
 	    }
 	};
 
-	var checkAllLoaded = function () {
+	var checkAllLoaded = function (callback) {
         var flag = true;
         for (var item in resourcestoload)
             if (resourcestoload[item].loaded !== true)
                 flag = false;
 	    
 	    if (flag && !this.loaded)
-	    {
-            this.loaded = true;
-            jQuery(that).trigger("ResourcesLoaded");
-	    }
+            callback();
 	};
     
     var initCanvas = function () {
@@ -101,8 +98,9 @@ var Game = function () {
 
 	this.Init = function () {
         initCanvas();
-        loadResources();
-		gameLoop = setInterval(Loop, UPDATE_TIME);
+        loadResources(function () {
+            gameLoop = setInterval(Loop, UPDATE_TIME);
+        });
 	};
     
     this.Start = function () {
