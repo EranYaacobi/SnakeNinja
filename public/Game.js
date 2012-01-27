@@ -108,7 +108,14 @@ SnakeNinja.Game = function () {
 	};
     
     this.Start = function () {
+        started = true;
         lastFrame = new Date().getTime();
+        that.mySnake = new SnakeNinja.Snake(this);
+        that.mySnake.Init("player1", 4, false, 1);
+        that.mySnake.Spawn({x:50, y:50}, 0, 5);
+        var pizza = new SnakeNinja.Pizza(this);
+        pizza.Spawn({x:50, y:50}, 2, 30000);
+        this.Pizzas.push(pizza);
     };
 
 	var Loop = function () {
