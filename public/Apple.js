@@ -5,24 +5,23 @@ var Apple = function(game)
         this.Size = size || 1;
         this.Position = position;
         this.TimeSpan = time || 20000;
-        this.Image = "images/apple.png";
+        this.Image = "images/apple" + Size + ".png";
     }
-    
-    
     
     this.Draw = function(graphics)
     {
-        graphics.drawImage(
+        graphics.drawImage(appleimage, x, y);
     }
     
-    this.Update = function()
+    this.Update = function(ts)
     {
+        
     }
     
     
     this.Eaten = function (snake)
     {
-        snake.length
+        snake.length + sizes;
     }
     
 }

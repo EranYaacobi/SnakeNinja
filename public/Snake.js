@@ -17,45 +17,49 @@ var Snake = function(name, guid, remote, team)
     {
         this.Length = length;
         this.Points = [];
-        this.Points.push(new Structures.TimedPoint(length, head))
+        this.Points.push(new Structures.TimedPoint(length, head));
 	    this.Direction = direction;
 	    this.Alive = true;
-        this.Action = Structures.Action.Nothing
+        this.Action = Structures.Action.Nothing;
 	};
     
     this.Update = function(timePassed)
     {
         timePassed = timePassed / 1000;
-        
-        if (remote == false)
+
+        if (this.Alive == true)
         {
-            // Add new point.
-            var newPoint = new Structures.TimedPoint(this.Length, this.Head.x, this.Head.y);
-            newPoint.Advance(timePassed, this.Speed, this.Direction);
-            this.Points.push(newPoint);
-            
-            // Advance head\tail.
-            for (var i = 0; i < this.Points.length; i++)
+            if (this.remote == true)
             {
-                var point = this.Points[i];
+                // Add new point.
+                var newPoint = new Structures.TimedPoint(this.Length, this.Head.x, this.Head.y);
+                newPoint.Update(0, this.Speed, this.Direction);
+                this.Points.push(newPoint);
                 
-                if (point.IsAlive == false)
-                    this.Points.shift;
-                else
-                    break;
+                // Advance head\tail.
+                for (var i = 0; i < this.Points.length; i++)
+                {
+                    var point = this.Points[i];
+                    
+                    point.Update(timePassed);
+                    if (point.IsAlive == false)
+                        this.Points.shift;
+                }
+                
+                this.ActionReloadTime -= timePassed;
+                
+                // Perform actions.
+                if (this.Keys.left == true)
+                    this.Direction += this.RotationSpeed * timePassed;
+                if (this.Keys.right == true)
+                    this.Direction -= this.RotationSpeed * timePassed;
+                if (this.Keys.action == true)
+                    this.PerformAction(timePassed);
             }
-            
-            // Perform actions.
-            if (this.Keys.left == true)
-                this.Direction += this.RotationSpeed;
-            if (this.Keys.right == true)
-                this.Direction -= this.RotationSpeed;
-            if (this.Keys.action == true)
-                this.PerformAction();
-        }
-        else
-        {
-            // Implement ugly code.
+            else
+            {
+                // Implement ugly code.
+            }
         }
     }
     
@@ -64,25 +68,26 @@ var Snake = function(name, guid, remote, team)
         this.Keys = keys;
     }
     
-    this.PerformAction = function()
+    this.PerformAction = function(timePassed)
     {
         switch (this.Action)
         {
-            case Structures.Action.Shoot: this.Shoot();
+            case Structures.Action.Shoot: this.Shoot(timePassed);
         }
     }
     
-    this.Shoot = function ()
+    this.Shoot = function(timePassed)
     {
-        if (this.Lives > 0 && this.Reload === 0)
-        {
-	        var shot = new Laser();
-	        shot.Init(this.Pos.X, this.Pos.Y, this.Rotation, this.shiptype, this.shotguid++);
-	        this.Shots.push(shot);
-	        game.SendShot(shot);
-	        this.Reload = PLAYER_RELOAD_TIME;
+        this.action_reload_time -= timePassed;
+        
+        var shot = new Laser();
+        
+        shot.Initialize(this.Points[this.Points.length - 1], this.Direction, this.team);
+        this.Shots.push(shot);
+        game.SendShot(shot);
+        this.Reload = PLAYER_RELOAD_TIME;
 	    }
-	};
+	}
 }
 
 	this.Destroy = function () {
