@@ -66,31 +66,31 @@ SnakeNinja.Snake = function(game)
         }
     };
     
-    this.Draw = function()
+    this.Draw = function(graphics)
     {
         if (this.Alive > 0)
         {
             for (var i = 0; i < this.Points.length; i++)
             {
                 /*var img = this.shiptype == 1 ? imgship1 : imgship2;
-                game.backBufferContext2D.save();
-    	        game.backBufferContext2D.translate(this.X, this.Pos.Y);
-    
-        		game.backBufferContext2D.font = "bold 10px sans-serif";
-        		game.backBufferContext2D.fillStyle = "White";
-        		game.backBufferContext2D.fillText(this.name || "No Name", -img.width / 2, -img.height / 2 - 10);
-        
-        		game.backBufferContext2D.fillStyle = this.isMyPlayer ? "rgba(0, 255, 0, 0.8)" : "rgba(255, 0, 0, 0.8)";
-        		game.backBufferContext2D.fillRect(-img.width / 2, -img.height / 2, 5 * this.Lives, 5);
-        		game.backBufferContext2D.strokeStyle = "rgba(250,250,250, 1)";
-        		game.backBufferContext2D.strokeRect(-img.width / 2, -img.height / 2, 50, 5);
-    
-    	        game.backBufferContext2D.rotate(this.Rotation * Math.PI / 180);
-    	        game.backBufferContext2D.drawImage(img, -img.width / 2, -img.height / 2);
-    	        game.backBufferContext2D.restore();*/
+                graphics.save();
+                graphics.translate(this.X, this.Pos.Y);
                 
-                game.backBufferContext2D.fillStyle = this.Remote ? "rgba(0, 255, 0, 0.8)" : "rgba(255, 0, 0, 0.8)";
-                game.backBufferContext2D.drawArc(this.Points[i].x, this.Points[i].y, 4, 0, 360, true);
+                graphics.font = "bold 10px sans-serif";
+                graphics.fillStyle = "White";
+                graphics.fillText(this.name || "No Name", -img.width / 2, -img.height / 2 - 10);
+                
+                graphics.fillStyle = this.isMyPlayer ? "rgba(0, 255, 0, 0.8)" : "rgba(255, 0, 0, 0.8)";
+                graphics.fillRect(-img.width / 2, -img.height / 2, 5 * this.Lives, 5);
+                graphics.strokeStyle = "rgba(250,250,250, 1)";
+                graphics.strokeRect(-img.width / 2, -img.height / 2, 50, 5);
+                
+                graphics.rotate(this.Rotation * Math.PI / 180);
+                graphics.drawImage(img, -img.width / 2, -img.height / 2);
+                graphics.backBufferContext2D.restore();*/
+                
+                graphics.fillStyle = this.Remote ? "rgba(0, 255, 0, 0.8)" : "rgba(255, 0, 0, 0.8)";
+                graphics.drawArc(this.Points[i].x, this.Points[i].y, 4, 0, 360, true);
             }
 	    }
     };
@@ -113,7 +113,7 @@ SnakeNinja.Snake = function(game)
     
     this.Shoot = function()
     {
-        var shot = new Laser();
+        var shot = new SnakeNinja/Laser();
 
         shot.Spawn(this, this.team, this.Points[this.Points.length - 1].point, this.Direction);
         this.Shots.push(shot);

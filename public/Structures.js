@@ -6,10 +6,10 @@ SnakeNinja.Structures.Point = function(x, y)
     this.y = y;
     this.Advance = function(amount, direction)
     {
-        this.x += Math.sin(Math.PI + this.Rotation * Math.PI / 180);
-        this.y += Math.cos(Math.PI + this.Rotation * Math.PI / 180);
+        this.x += amount * Math.sin(Math.PI + direction * Math.PI / 180);
+        this.y += amount * Math.cos(Math.PI + direction * Math.PI / 180);
     };
-}
+};
 
 SnakeNinja.Structures.TimedPoint = function(time, point)
 {
@@ -31,10 +31,10 @@ SnakeNinja.Structures.TimedPoint = function(time, point)
     {
         return (time > 0);
     };
-}
+};
 
 SnakeNinja.Structures.Action =
 {
     nothing:    0,
     shoot:      1
-}
+};
