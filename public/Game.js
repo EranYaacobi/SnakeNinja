@@ -47,6 +47,12 @@ var Game = function () {
         var timediff = now - lastFrame;
         lastFrame = new Date().getTime();
         
+        if (that.mySnake)
+            that.mySnake.ReceiveInput({
+                left: leftKey,
+                right: rightKey,
+                up: upKey });
+        
 		that.Update(timediff);
 		that.Draw();
 	};
@@ -80,7 +86,6 @@ var Game = function () {
     var rightKey = false;
     var leftKey = false;
 	var upKey = false;
-	var downKey = false;
 	var spaceKey = false;
 
 	var enter = false;
@@ -89,7 +94,7 @@ var Game = function () {
         if (evt.keyCode == 39) rightKey = false;
 		else if (evt.keyCode == 37) leftKey = false;
 		if (evt.keyCode == 38) upKey = false;
-		else if (evt.keyCode == 40) downKey = false;
+        
 		if (evt.keyCode == 32) spaceKey = false;
 
 		if (evt.keyCode == 13) enter = false;
@@ -99,7 +104,7 @@ var Game = function () {
         if (evt.keyCode == 39) rightKey = true;
 	    else if (evt.keyCode == 37) leftKey = true;
 	    if (evt.keyCode == 38) upKey = true;
-	    else if (evt.keyCode == 40) downKey = true;
+        
 	    if (evt.keyCode == 32) spaceKey = true;
 
 	    //if (evt.keyCode == 13)
