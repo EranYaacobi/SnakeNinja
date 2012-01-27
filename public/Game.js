@@ -45,6 +45,8 @@ var Game = function () {
     
     this.resources = {};
     
+    var started = false;
+    
     /** load images and sound */
     var loadResources = function (callback) {
         for (var item in resourcestoload)
@@ -117,6 +119,12 @@ var Game = function () {
 	};
 	
 	this.Update = function (timediff) {
+        /** Handle input */
+        if (enter && !started) {
+            that.Start();
+        }
+        
+        
         if (that.mySnake)
             that.mySnake.ReceiveInput({
                 left: leftKey,
