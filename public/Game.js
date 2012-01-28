@@ -157,7 +157,7 @@ SnakeNinja.Game = function () {
 	this.Update = function (timediff) {
         /** Handle input */
         if (enter && !connected) {
-            that.Connect();
+            Connect();
         }
         
         
