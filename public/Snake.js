@@ -226,7 +226,7 @@ SnakeNinja.Snake = function(game) {
 
         shot.Init(shotGuid, this.remote, this.team, this, this.Points[this.Points.length - 1].point, this.Direction);
         this.Game.Shots.push(shot);
-        this.ActionReloadTime = PLAYER_RELOAD_TIME;
+        this.ActioAnReloadTime = PLAYER_RELOAD_TIME;
 	};
     
     this.Increase = function(length)
