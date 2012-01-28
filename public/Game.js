@@ -36,7 +36,6 @@ var resourcestoload = {
 SnakeNinja.Game = function () {
 	var that = this;
 	var gameLoop = null;
-    this.Element = jQuery(".AltCanvas");
     var sendDataLoop = null;
 
     this.canvas = null;
@@ -53,7 +52,7 @@ SnakeNinja.Game = function () {
     
     this.Resources = {};
     
-    var started = false;
+    var connected = false;
     var socket;
     
     /** load images and sound */
@@ -123,32 +122,27 @@ SnakeNinja.Game = function () {
         socket.on('joinconfirmed', function (id) {
             alert("id assigned:" + id);
             sendDataLoop = setInterval(SendData, SEND_DATA_TIME);
+            
+            lastFrame = new Date().getTime();
+            that.mySnake = new SnakeNinja.Snake(that);
+            that.mySnake.Init("player1", 4, false, 1);
+            that.mySnake.Spawn(new SnakeNinja.Structures.Point(100, 200), 0, 5);
+            var pizza = new SnakeNinja.Pizza(that);
+            pizza.Spawn(new SnakeNinja.Structures.Point(25, 25), 2, 30000);
+            that.Pizzas.push(pizza);
         });
     };
     
     var ReceiveData = function (snakes) {
-        /** */
-        alert('received data');
+        /** put snakes in Snakes */
         /*for (var i in that.Snakes) {
             var snake = that.Snakes[i];
-            that.mySnake.UpdateData();
+            //that.mySnake.UpdateData();
         }*/
     };
 
     var SendData = function () {
-        socket.emit('playerdata', { ID: 5/*that.mySnake.ID*/, Something:5 });
-    };
-    
-    this.Start = function () {
-        Connect();
-        started = true;
-        lastFrame = new Date().getTime();
-        that.mySnake = new SnakeNinja.Snake(this);
-        that.mySnake.Init("player1", 4, false, 1);
-        that.mySnake.Spawn(new SnakeNinja.Structures.Point(100, 200), 0, 5);
-        var pizza = new SnakeNinja.Pizza(this);
-        pizza.Spawn(new SnakeNinja.Structures.Point(25, 25), 1, 30000);
-        this.Pizzas.push(pizza);
+        socket.emit('playerdata', that.mySnake.GetData());
     };
 
 	var Loop = function () {
@@ -162,8 +156,8 @@ SnakeNinja.Game = function () {
 	
 	this.Update = function (timediff) {
         /** Handle input */
-        if (enter && !started) {
-            that.Start();
+        if (enter && !connected) {
+            that.Connect();
         }
         
         
@@ -186,7 +180,6 @@ SnakeNinja.Game = function () {
 	
 	this.Draw = function () {
         /** clear backbuffer */
-        
 	    that.backBufferContext2D.clearRect(0, 0, that.backBuffer.width, that.backBuffer.height);
         
         /** draw pizzas */
@@ -199,7 +192,7 @@ SnakeNinja.Game = function () {
         if (that.mySnake)
             that.mySnake.Draw(that.backBufferContext2D);
         
-        //drawBackBuffer();
+        drawBackBuffer();
 	};
     
     var drawBackBuffer = function () {
