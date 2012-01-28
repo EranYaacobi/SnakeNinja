@@ -5,11 +5,6 @@ var UPDATE_TIME = 1000 / UPDATES_PER_SECOND;
 var SEND_DATA_PER_SECOND = 1;
 var SEND_DATA_TIME = 1000 / SEND_DATA_PER_SECOND;
 
-var CANVAS_WIDTH = 800;
-var CANVAS_HEIGHT = 600;
-
-var SERVER_CONNECTION = "localhost";
-
 var resourcestoload = {
     /*"sndEat" : {
         loaded : false,
@@ -64,7 +59,7 @@ SnakeNinja.Game = function () {
 	var loadResource = function (name, callback) {
         var toload = resourcestoload[name];
         if (!toload) {
-            alert('undefined loadable');
+            
             return;
 	    }
 
@@ -92,22 +87,7 @@ SnakeNinja.Game = function () {
             callback();
 	};
     
-    var initCanvas = function () {
-        jQuery(".SnakeNinja").each(function () {
-            that.canvas = this;
-            that.canvas.width = CANVAS_WIDTH;
-            that.canvas.height = CANVAS_HEIGHT;
-            that.context2D = that.canvas.getContext('2d');
-            that.backBuffer = document.createElement('canvas');//jQuery('<canvas />');
-            that.backBuffer.width = CANVAS_WIDTH;
-            that.backBuffer.height = CANVAS_HEIGHT;
-            that.backBufferContext2D = that.backBuffer.getContext('2d');
-        });
-    };
-    
-
 	this.Init = function () {
-        initCanvas();
         jQuery(document).keydown(that.onKeyDown);
         jQuery(document).keyup(that.onKeyUp);
         loadResources(function () {
@@ -120,7 +100,7 @@ SnakeNinja.Game = function () {
         socket.emit('join', {});
         socket.on('serverdata', ReceiveData);
         socket.on('joinconfirmed', function (id) {
-            alert("id assigned:" + id);
+            
             sendDataLoop = setInterval(SendData, SEND_DATA_TIME);
             
             lastFrame = new Date().getTime();
@@ -180,7 +160,6 @@ SnakeNinja.Game = function () {
 	
 	this.Draw = function () {
         /** clear backbuffer */
-	    that.backBufferContext2D.clearRect(0, 0, that.backBuffer.width, that.backBuffer.height);
         
         /** draw pizzas */
         for (var i in that.Pizzas)
@@ -193,11 +172,6 @@ SnakeNinja.Game = function () {
             that.mySnake.Draw(that.backBufferContext2D);
         
         drawBackBuffer();
-	};
-    
-    var drawBackBuffer = function () {
-		that.context2D.clearRect(0, 0, that.canvas.width, that.canvas.height);
-		that.context2D.drawImage(that.backBuffer, 0, 0);
 	};
     
     var rightKey = false;
@@ -224,6 +198,6 @@ SnakeNinja.Game = function () {
 };
 
 jQuery(function () {
-    var game = new SnakeNinja.Game();
-    game.Init();
+    Game = new SnakeNinja.Game();
+    Game.Init();
 });
