@@ -1,9 +1,8 @@
 var PLAYER_SPEED = 100;
-var PLAYER_ROTATION_SPEED = 215;
+var PLAYER_ROTATION_SPEED = 420;
 var PLAYER_RELOAD_TIME = 0.25;
 
-SnakeNinja.Snake = function(game)
-{
+SnakeNinja.Snake = function(game) {
     this.Game = game;
     
     this.Init = function(name, guid, remote, team)
@@ -23,7 +22,7 @@ SnakeNinja.Snake = function(game)
         this.Length = length;
         this.Points = [];
         this.Points.push(new SnakeNinja.Structures.TimedPoint(length, head));
-        this.Direction = direction;
+	    this.Direction = direction;
 	    this.Alive = true;
         this.Action = SnakeNinja.Structures.Action.Nothing;
 	};
@@ -37,8 +36,8 @@ SnakeNinja.Snake = function(game)
             if (!this.remote)
             {
                 // Add new point.
-                var newPoint = new SnakeNinja.Structures.TimedPoint(this.Length + timePassed, this.Points[this.Points.length - 1].Point);
-                newPoint.Update(timePassed, this.Speed, this.Direction);
+                var newPoint = new SnakeNinja.Structures.TimedPoint(this.Length, this.Points[this.Points.length - 1]);
+                newPoint.Update(0, this.Speed, this.Direction);
                 this.Points.push(newPoint);
                 
                 // Advance head\tail.
@@ -47,11 +46,8 @@ SnakeNinja.Snake = function(game)
                     var point = this.Points[i];
                     
                     point.Update(timePassed);
-                    if (!point.IsAlive())
-                    {
+                    if (!point.IsAlive)
                         this.Points.shift();
-                        i -= 1;
-                    }
                 }
                 
                 this.ActionReloadTime -= timePassed;
@@ -93,10 +89,9 @@ SnakeNinja.Snake = function(game)
                 graphics.rotate(this.Rotation * Math.PI / 180);
                 graphics.drawImage(img, -img.width / 2, -img.height / 2);
                 graphics.backBufferContext2D.restore();*/
+                
                 graphics.fillStyle = this.Remote ? "rgba(0, 128, 128, 0.8)" : "rgba(0, 255, 0, 0.8)";
-                graphics.beginPath();
-                graphics.arc(this.Points[i].Point.X, this.Points[i].Point.Y, 4, 0, 2 * Math.PI, true);
-                graphics.fill();
+                graphics.arc(this.Points[i].X, this.Points[i].Y, 4, 0, 360, true);
             }
 	    }
     };
@@ -122,7 +117,7 @@ SnakeNinja.Snake = function(game)
         var shot = new SnakeNinja.Laser(this.Game);
         var shotGuid = Math.random();
 
-        shot.Init(shotGuid, this.remote, this.team, this, this.Points[this.Points.length - 1].Point, this.Direction);
+        shot.Init(shotGuid, this.remote, this.team, this, this.Points[this.Points.length - 1].point, this.Direction);
         this.Shots.push(shot);
         this.Game.AddShot(shot);
         this.ActionReloadTime = PLAYER_RELOAD_TIME;
