@@ -2,9 +2,10 @@ var PLAYER_SPEED = 100;
 var PLAYER_ROTATION_SPEED = 420;
 var PLAYER_RELOAD_TIME = 0.25;
 
-SnakeNinja.SnakeData = function(timeStamp, position, direction, length, alive, action, keys)
+SnakeNinja.SnakeData = function(timeStamp, iD, position, direction, length, alive, action, keys)
 {
     this.TimeStamp = timeStamp;
+    this.ID = iD;
     this.Position = position;
     this.Direction = direction;
     this.Length = length;
@@ -196,7 +197,7 @@ SnakeNinja.Snake = function(game) {
             for (var i = 0; i < this.Points.length; i++)
             {
                 this.Elements.push(jQuery("<div class='SnakePoint' />").css({left:this.Points[i].Point.X, top: 
-                this.Points[i].Point.Y}).appendTo(game.Element));
+                this.Points[i].Point.Y}).appendTo(this.Game.Element));
             }
 	    }
     };
@@ -223,8 +224,7 @@ SnakeNinja.Snake = function(game) {
         var shotGuid = Math.random();
 
         shot.Init(shotGuid, this.remote, this.team, this, this.Points[this.Points.length - 1].point, this.Direction);
-        this.Shots.push(shot);
-        this.Game.AddShot(shot);
+        this.Game.Shots.push(shot);
         this.ActionReloadTime = PLAYER_RELOAD_TIME;
 	};
     
