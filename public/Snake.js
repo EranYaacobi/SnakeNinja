@@ -37,7 +37,7 @@ SnakeNinja.Snake = function(game) {
             if (!this.remote)
             {
                 // Add new point.
-                var newPoint = new SnakeNinja.Structures.TimedPoint(this.Length, this.Points[this.Points.length - 1]);
+                var newPoint = new SnakeNinja.Structures.TimedPoint(this.Length, this.Points[this.Points.length - 1].Point);
                 newPoint.Update(0, this.Speed, this.Direction);
                 this.Points.push(newPoint);
                 

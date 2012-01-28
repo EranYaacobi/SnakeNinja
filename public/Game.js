@@ -60,7 +60,7 @@ SnakeNinja.Game = function () {
 	var loadResource = function (name, callback) {
         var toload = resourcestoload[name];
         if (!toload) {
-            alert('undefined loadable');
+            
             return;
 	    }
 
@@ -101,14 +101,14 @@ SnakeNinja.Game = function () {
         socket.emit('join', {});
         socket.on('serverdata', ReceiveData);
         socket.on('joinconfirmed', function (id) {
-            alert("id assigned:" + id);
+            
             sendDataLoop = setInterval(SendData, SEND_DATA_TIME);
         });
     };
     
     var ReceiveData = function (snakes) {
         /** */
-        alert('received data');
+        
         /*for (var i in that.Snakes) {
             var snake = that.Snakes[i];
             that.mySnake.UpdateData();
@@ -204,6 +204,6 @@ SnakeNinja.Game = function () {
 };
 
 jQuery(function () {
-    var game = new SnakeNinja.Game();
-    game.Init();
+    Game = new SnakeNinja.Game();
+    Game.Init();
 });
