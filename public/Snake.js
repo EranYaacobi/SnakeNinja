@@ -83,27 +83,6 @@ SnakeNinja.Snake = function(game)
         {
             for (var i = 0; i < this.Points.length; i++)
             {
-                /*var img = this.shiptype == 1 ? imgship1 : imgship2;
-                graphics.save();
-                graphics.translate(this.X, this.Pos.Y);
-                
-                graphics.font = "bold 10px sans-serif";
-                graphics.fillStyle = "White";
-                graphics.fillText(this.name || "No Name", -img.width / 2, -img.height / 2 - 10);
-                
-                graphics.fillStyle = this.isMyPlayer ? "rgba(0, 255, 0, 0.8)" : "rgba(255, 0, 0, 0.8)";
-                graphics.fillRect(-img.width / 2, -img.height / 2, 5 * this.Lives, 5);
-                graphics.strokeStyle = "rgba(250,250,250, 1)";
-                graphics.strokeRect(-img.width / 2, -img.height / 2, 50, 5);
-                
-                graphics.rotate(this.Rotation * Math.PI / 180);
-                graphics.drawImage(img, -img.width / 2, -img.height / 2);
-                graphics.backBufferContext2D.restore();*/
-                
-                graphics.fillStyle = this.Remote ? "rgba(0, 128, 128, 0.8)" : "rgba(0, 255, 0, 0.8)";
-                graphics.beginPath();
-                graphics.arc(this.Points[i].Point.X, this.Points[i].Point.Y, 4, 0, 2 * Math.PI, true);
-                graphics.fill();
                 this.Elements.push(jQuery("<div class='SnakePoint' />").css({left:this.Points[i].Point.X, top: 
                 this.Points[i].Point.Y}).appendTo(game.Element));
             }
