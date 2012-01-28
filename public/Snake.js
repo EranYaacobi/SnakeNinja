@@ -184,7 +184,7 @@ SnakeNinja.Snake = function(game) {
         return NextValue * NextWeight + PreviousValue * PreviousWeight;
     };
     
-    this.Draw = function(graphics)
+    this.Draw = function()
     {
         jQuery(this.Elements).each(function()
         {

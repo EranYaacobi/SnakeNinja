@@ -35,7 +35,7 @@ SnakeNinja.Laser = function(game)
         }
     };
     
-    this.Draw = function(graphics)
+    this.Draw = function()
     {
         if (this.Alive)
         {

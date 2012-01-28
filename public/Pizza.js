@@ -11,7 +11,7 @@ SnakeNinja.Pizza = function(game)
         (game.Element);
     };
     
-    this.Draw = function(graphics)
+    this.Draw = function()
     {
         
     };

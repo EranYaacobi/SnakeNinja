@@ -35,8 +35,6 @@ SnakeNinja.Game = function () {
 
     this.canvas = null;
     this.context2D = null;
-    this.backBuffer = null;
-    this.backBufferContext2D = null;
     
     var lastFrame = null;
     
@@ -160,19 +158,15 @@ SnakeNinja.Game = function () {
 	};
 	
 	this.Draw = function () {
-        /** clear backbuffer */
-        
         /** draw pizzas */
         for (var i in that.Pizzas)
-            that.Pizzas[i].Draw(that.backBufferContext2D);
+            that.Pizzas[i].Draw();
         
         /** draw powerups */
         
         /** draw snakes */
         if (that.mySnake)
-            that.mySnake.Draw(that.backBufferContext2D);
-        
-        drawBackBuffer();
+            that.mySnake.Draw();
 	};
     
     var rightKey = false;
