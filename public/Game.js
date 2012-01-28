@@ -32,7 +32,7 @@ var resourcestoload = {
 SnakeNinja.Game = function () {
 	var that = this;
 	var gameLoop = null;
-
+    this.Element = jQuery(".AltCanvas");
     this.canvas = null;
     this.context2D = null;
     this.backBuffer = null;
@@ -116,7 +116,7 @@ SnakeNinja.Game = function () {
         that.mySnake.Init("player1", 4, false, 1);
         that.mySnake.Spawn(new SnakeNinja.Structures.Point(100, 200), 0, 5);
         var pizza = new SnakeNinja.Pizza(this);
-        pizza.Spawn(new SnakeNinja.Structures.Point(25, 25), 2, 30000);
+        pizza.Spawn(new SnakeNinja.Structures.Point(25, 25), 1, 30000);
         this.Pizzas.push(pizza);
     };
 
@@ -155,6 +155,7 @@ SnakeNinja.Game = function () {
 	
 	this.Draw = function () {
         /** clear backbuffer */
+        
 	    that.backBufferContext2D.clearRect(0, 0, that.backBuffer.width, that.backBuffer.height);
         
         /** draw pizzas */
@@ -167,7 +168,7 @@ SnakeNinja.Game = function () {
         if (that.mySnake)
             that.mySnake.Draw(that.backBufferContext2D);
         
-        drawBackBuffer();
+        //drawBackBuffer();
 	};
     
     var drawBackBuffer = function () {

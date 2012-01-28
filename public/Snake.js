@@ -5,6 +5,7 @@ var PLAYER_RELOAD_TIME = 0.25;
 SnakeNinja.Snake = function(game)
 {
     this.Game = game;
+    this.Elements = [];
     
     this.Init = function(name, guid, remote, team)
     {
@@ -73,6 +74,11 @@ SnakeNinja.Snake = function(game)
     
     this.Draw = function(graphics)
     {
+        jQuery(this.Elements).each(function()
+        {
+            jQuery(this).remove();
+        });
+        this.Elements=[];
         if (this.Alive)
         {
             for (var i = 0; i < this.Points.length; i++)
@@ -93,10 +99,13 @@ SnakeNinja.Snake = function(game)
                 graphics.rotate(this.Rotation * Math.PI / 180);
                 graphics.drawImage(img, -img.width / 2, -img.height / 2);
                 graphics.backBufferContext2D.restore();*/
+                
                 graphics.fillStyle = this.Remote ? "rgba(0, 128, 128, 0.8)" : "rgba(0, 255, 0, 0.8)";
                 graphics.beginPath();
                 graphics.arc(this.Points[i].Point.X, this.Points[i].Point.Y, 4, 0, 2 * Math.PI, true);
                 graphics.fill();
+                this.Elements.push(jQuery("<div class='SnakePoint' />").css({left:this.Points[i].Point.X, top: 
+                this.Points[i].Point.Y}).appendTo(game.Element));
             }
 	    }
     };
