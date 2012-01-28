@@ -40,6 +40,7 @@ SnakeNinja.Game = function () {
     this.Snakes = [];
     this.mySnake = null;
     this.Pizzas = [];
+    this.Shots = [];
     this.Powerups = [];
     
     this.Resources = {};
@@ -149,6 +150,10 @@ SnakeNinja.Game = function () {
         for (var i in that.Pizzas)
             that.Pizzas[i].Update(timediff);
         
+        /** update shots */
+        for (var i in that.Shots)
+            that.Shots[i].update(timediff);
+        
         /** update powerups */
         
         /** update snakes */
@@ -160,6 +165,10 @@ SnakeNinja.Game = function () {
         /** draw pizzas */
         for (var i in that.Pizzas)
             that.Pizzas[i].Draw();
+            
+        /** draw shots */
+        for (var i in that.Shots)
+            that.Shots[i].Draw();
         
         /** draw powerups */
         

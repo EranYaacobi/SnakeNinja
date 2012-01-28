@@ -41,14 +41,8 @@ SnakeNinja.Laser = function(game)
         {
             for (var i = 0; i < this.Points.length; i++)
             {
-                var image = this.Game.Resources.imgLaser;
-                
-                graphics.save();
-                graphics.translate(this.Position.X, this.Position.Y);
-                
-                graphics.rotate(this.Direction * Math.PI / 180);
-                graphics.drawImage(image, -image.width / 2, -image.height / 2);
-                graphics.backBufferContext2D.restore();
+                jQuery("<div class='Laser' />").css({left:this.Position.X,
+                                                     top: this.Position.Y}).transform({rotate: this.Direction + 'deg'}).appendTo(this.Game.Element);
             }
         }
     };
