@@ -41,7 +41,8 @@ SnakeNinja.Snake = function(game) {
         this.Points.push(new SnakeNinja.Structures.TimedPoint(length, head));
 	    this.Direction = direction;
 	    this.Alive = true;
-        this.Action = SnakeNinja.Structures.Action.Nothing;
+        this.Action = SnakeNinja.Structures.Action.Shoot;
+        this.ActionReloadTime = 0;
 	};
     
     this.InternalUpdate = function(timePassed)
@@ -86,7 +87,6 @@ SnakeNinja.Snake = function(game) {
             if (!this.remote)
             {
                 // Add new point.
-
                 newPoint = new SnakeNinja.Structures.TimedPoint(this.Length + timePassed, this.Points[this.Points.length - 1].Point);
                 newPoint.Update(timePassed, this.Speed, this.Direction);
                 this.Points.push(newPoint);
@@ -168,9 +168,10 @@ SnakeNinja.Snake = function(game) {
     
     this.GetData = function()
     {
-        return new SnakeNinja.SnakeData(this.Points[this.Points.length - 1],
+        return new SnakeNinja.SnakeData(0, 
+                                        this.Guid,
+                                        this.Points[this.Points.length - 1],
                                         this.Direction,
-                                        0,
                                         this.Alive,
                                         this.Action,
                                         this.Keys);
@@ -209,7 +210,7 @@ SnakeNinja.Snake = function(game) {
     
     this.PerformAction = function()
     {
-        if (this.ActionReloadTime > 0)
+        if (this.ActionReloadTime < 0)
         {
             switch (this.Action)
             {

@@ -35,6 +35,6 @@ SnakeNinja.Structures.TimedPoint = function(time, point)
 
 SnakeNinja.Structures.Action =
 {
-    nothing:    0,
-    shoot:      1
+    Nothing:    0,
+    Shoot:      1
 };
