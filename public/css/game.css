@@ -1,0 +1,29 @@
+.AltCanvas
+{
+    width:800px;
+    height:600px;
+    position:relative;
+}
+
+.Pizza
+{
+    position:absolute;
+    width:256px;
+    background-image:url(../Images/pizza.png);
+    height:256px;
+}
+
+.Pizza1
+{
+    background-size:64px 64px;
+    width:64px;
+    height:64px;
+}
+
+.SnakePoint
+{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background-color:green;
+}
