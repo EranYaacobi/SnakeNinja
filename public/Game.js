@@ -102,15 +102,55 @@ SnakeNinja.Game = function () {
             
             lastFrame = new Date().getTime();
             that.mySnake = new SnakeNinja.Snake(that);
-            that.mySnake.Init("player1", 4, false, 1);
+            that.mySnake.Init("player1", id, false, id);
             that.mySnake.Spawn(new SnakeNinja.Structures.Point(100, 200), 0, 5);
             var pizza = new SnakeNinja.Pizza(that);
             pizza.Spawn(new SnakeNinja.Structures.Point(25, 25), 2, 30000);
             that.Pizzas.push(pizza);
         });
     };
+    var serverTimeStamp = null;
+    var GetSnakeIndex = function (ID) {
+        for (var i in that.Snakes)
+            if (that.Snakes[i].ID == ID)
+                return i;
+        return -1;
+    };
     
-    var ReceiveData = function (snakes) {
+    var ReceiveData = function (timestamp, snakesdata) {
+        serverTimeStamp = timestamp;
+        
+        for (var i in that.Snakes) {
+            var snake = that.Snakes[i];
+            snake.updated = false;
+        }
+        
+        for (var i in snakesdata) {
+            var snakedata = snakesdata[i];
+            
+            var index = GetSnakeIndex(snakedata.ID);
+            if (index == -1) {
+                /** add a new snake */
+                var newsnake = new NinjaSnake.Snake();
+                //newsnake.Init();
+                //newsnake.Spawn();
+                newsnake.UpdateData(snakedata);
+                newsnake.updated = true;
+                that.Snakes.push(newsnake);
+            }
+            else {
+                that.Snakes[index].UpdateData(snakedata);
+                that.Snakes[index].updated = true;
+            }
+        }
+        
+        for (var i in that.Snakes) {
+            if (!that.Snakes[i].updated)
+                /** remove snake */
+                that.Snakes.splice(i, 1);
+            
+        }
+        
         /** put snakes in Snakes */
         /*for (var i in that.Snakes) {
             var snake = that.Snakes[i];
