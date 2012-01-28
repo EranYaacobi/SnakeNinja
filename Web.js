@@ -27,7 +27,8 @@ var broadcast = function (event, data1, data2, data3) {
 };
 
 var SendData = function () {
-    broadcast('serverdata', Snakes);
+    var timestamp = new Date().getTime();
+    broadcast('serverdata', timestamp, Snakes);
 };
 
 var FindSnakeIndex = function (ID) {
@@ -58,12 +59,23 @@ io.sockets.on('connection', function (socket) {
 				Sockets.splice(i, 1);
 	});
     
-    socket.on('playerdata', function (playerdata) {
-        var index = FindSnakeIndex(playerdata.ID);
+    var ReceivedData = [];
+    
+    socket.on('requestsnakes', function () {
+        
+    });
+    
+    socket.on('receivesnake', function (data) {
+        broadcast('fullsnake', data);
+    });
+    
+    socket.on('pointdata', function (pointdata) {
+        ReceivedData.push(pointdata);
+        /*var index = FindSnakeIndex(playerdata.ID);
         if (index == -1)
             /** New player */
-            Snakes.push(playerdata);
+            /*Snakes.push(playerdata);
         else
-            Snakes[index] = playerdata;
+            Snakes[index] = playerdata;*/
     });
 });
