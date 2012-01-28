@@ -2,9 +2,13 @@ SnakeNinja = {};
 
 var UPDATES_PER_SECOND = 30;
 var UPDATE_TIME = 1000 / UPDATES_PER_SECOND;
+var SEND_DATA_PER_SECOND = 1;
+var SEND_DATA_TIME = 1000 / SEND_DATA_PER_SECOND;
 
 var CANVAS_WIDTH = 800;
 var CANVAS_HEIGHT = 600;
+
+var SERVER_CONNECTION = "localhost";
 
 var resourcestoload = {
     /*"sndEat" : {
@@ -32,6 +36,7 @@ var resourcestoload = {
 SnakeNinja.Game = function () {
 	var that = this;
 	var gameLoop = null;
+    var sendDataLoop = null;
 
     this.canvas = null;
     this.context2D = null;
@@ -48,6 +53,7 @@ SnakeNinja.Game = function () {
     this.Resources = {};
     
     var started = false;
+    var socket;
     
     /** load images and sound */
     var loadResources = function (callback) {
@@ -109,7 +115,31 @@ SnakeNinja.Game = function () {
         });
 	};
     
+    var Connect = function () {
+        socket = io.connect();
+        socket.emit('join', {});
+        socket.on('serverdata', ReceiveData);
+        socket.on('joinconfirmed', function (id) {
+            alert("id assigned:" + id);
+            sendDataLoop = setInterval(SendData, SEND_DATA_TIME);
+        });
+    };
+    
+    var ReceiveData = function (snakes) {
+        /** */
+        alert('received data');
+        /*for (var i in that.Snakes) {
+            var snake = that.Snakes[i];
+            that.mySnake.UpdateData();
+        }*/
+    };
+
+    var SendData = function () {
+        socket.emit('playerdata', { ID: 5/*that.mySnake.ID*/, Something:5 });
+    };
+    
     this.Start = function () {
+        Connect();
         started = true;
         lastFrame = new Date().getTime();
         that.mySnake = new SnakeNinja.Snake(this);
