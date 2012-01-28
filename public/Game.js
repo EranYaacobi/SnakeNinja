@@ -107,7 +107,6 @@ SnakeNinja.Game = function () {
     };
     
     var ReceiveData = function (snakes) {
-        /** */
         
         /*for (var i in that.Snakes) {
             var snake = that.Snakes[i];
