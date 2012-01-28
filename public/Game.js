@@ -33,8 +33,7 @@ SnakeNinja.Game = function () {
 	var gameLoop = null;
     var sendDataLoop = null;
 
-    this.canvas = null;
-    this.context2D = null;
+    this.Element = jQuery(".AltCanvas");
     
     var lastFrame = null;
     
