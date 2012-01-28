@@ -171,7 +171,6 @@ SnakeNinja.Game = function () {
         if (that.mySnake)
             that.mySnake.Draw(that.backBufferContext2D);
         
-        drawBackBuffer();
 	};
     
     var rightKey = false;
